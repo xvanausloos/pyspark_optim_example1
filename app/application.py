@@ -1,11 +1,6 @@
 from pyspark.sql import SparkSession
 from app.myfunc import MyFunc
 from common import spark_utils
-from app import myfunc
-
-
-
-
 
 def main() -> None:
     my_spark = spark_utils.get_spark_session(app_name="ldi")
@@ -56,9 +51,6 @@ class Application:
             # Generate a subset of names with potential overlap
             if overlap:
                 names = base_names[:i + 2]  # Increasing overlap with each group
-            else:
-                ucids = [f'Person_{i}_{j}' for j in range(num_groups)]
-
             # Create a DataFrame for the group
             group_df = self._spark.createDataFrame([(name, f'Group_{i}') for name in names], ["names", "group_id"])
             print(group_df.show(truncate=False))

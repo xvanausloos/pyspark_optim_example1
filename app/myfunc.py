@@ -1,6 +1,4 @@
 from functools import reduce
-from os import truncate
-
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as sf
 
