@@ -1,0 +1,9 @@
+[tool.black]
+exclude = '''
+/(
+    # Exclude directories
+    (venv|build|dist)/
+    # Exclude specific files
+    (README\.md|.*\.log|.*\.txt|.*\.json)
+)/
+'''

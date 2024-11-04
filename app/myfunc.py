@@ -2,10 +2,10 @@ from functools import reduce
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as sf
 
-class MyFunc:
 
+class MyFunc:
     def __init__(self, spark: SparkSession) -> None:
-            self._spark = spark
+        self._spark = spark
 
     def use_loops(self, list_df: list):
         distinct_names = set()
@@ -27,9 +27,8 @@ class MyFunc:
                                     ["names"],
                                 )
                             ),
-                            on="names"
+                            on="names",
                         )
                     )
 
         return reduce(DataFrame.unionByName, final_groups)
-
