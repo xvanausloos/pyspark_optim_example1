@@ -1,14 +1,10 @@
-from functools import reduce
-
-from pyspark.shell import spark
 from pyspark.sql import SparkSession
-from pyspark.sql import functions as sf
-from pyspark.sql.connect.dataframe import DataFrame
-
 from app.myfunc import MyFunc
 from common import spark_utils
-
 from app import myfunc
+
+
+
 
 
 def main() -> None:
