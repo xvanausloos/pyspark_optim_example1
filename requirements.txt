@@ -1,0 +1,4 @@
+grpcio >= 1.48.1
+pandas>=1.0.5
+PyArrow >= 4.0.0
+pyspark==3.5.3
