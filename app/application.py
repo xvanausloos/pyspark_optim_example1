@@ -16,17 +16,18 @@ def main() -> None:
     application = Application(my_spark)
 
     num_groups = 5
-    # Generate test data with overlapping names
-    test_data = application.generate_test_data(num_groups=num_groups, overlap=True)
+    # Generate test data with overlapping names returns a list of dataframes
+    test_data_list = application.generate_test_data(num_groups=num_groups, overlap=True)
+
     # Step 1: Union all DataFrames in df_list into a single DataFrame
     #unioned_df = reduce(lambda df1, df2: df1.unionByName(df2, allowMissingColumns=True), test_data)
 
     mf = MyFunc(my_spark)
-    result = mf.use_loops(test_data)
+    result = mf.use_loops(test_data_list)
 
 
-    print("Unioned_df: ")
-    print(unioned_df.show(truncate=False))
+    print("result: ")
+    print(result.show(truncate=False))
     print("*** End ***")
 
 
