@@ -1,6 +1,9 @@
+import functools
+
 from pyspark.sql import SparkSession
 from app.myfunc import MyFunc
 from common import spark_utils
+from pyspark.sql import functions as sf
 
 
 def main() -> None:
@@ -11,14 +14,17 @@ def main() -> None:
     # Generate test data with overlapping names returns a list of dataframes
     test_data_list = application.generate_test_data(num_groups=num_groups, overlap=True)
 
-    # Step 1: Union all DataFrames in df_list into a single DataFrame
-    # unioned_df = reduce(lambda df1, df2: df1.unionByName(df2, allowMissingColumns=True), test_data)
 
     mf = MyFunc(my_spark)
     result = mf.use_loops(test_data_list)
 
-    print("result: ")
-    print(result.show(truncate=False))
+    # Step 1: Union all DataFrames in df_list into a single DataFrame
+    unioned_df = functools.reduce(lambda df1, df2: df1.unionByName(df2, allowMissingColumns=True), test_data_list)
+
+    result2 = mf.use_dataframe_properties(df=unioned_df, num_groups=5)
+
+    print("result2: ")
+    print(result2.show(truncate=False))
     print("*** End ***")
 
 
