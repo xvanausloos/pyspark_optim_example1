@@ -39,12 +39,18 @@ class MyFunc:
 
         mapping_dict = {col_id: idx for idx, col_id in enumerate(group_ref)}
 
-        df_with_mapping = df.withColumn('actual_number',
-                                        sf.create_map([sf.lit(x) for x in sum(mapping_dict.items(), ())])[
-                                            sf.col('group_id')])
+        df_with_mapping = df.withColumn(
+            "actual_number",
+            sf.create_map([sf.lit(x) for x in sum(mapping_dict.items(), ())])[
+                sf.col("group_id")
+            ],
+        )
 
-        window_spec = Window.partitionBy("names").orderBy("actual_number")  # Define an appropriate ordering column
-        ranked_df = df_with_mapping.withColumn("rank", sf.row_number().over(window_spec))
+        window_spec = Window.partitionBy("names").orderBy(
+            "actual_number"
+        )  # Define an appropriate ordering column
+        ranked_df = df_with_mapping.withColumn(
+            "rank", sf.row_number().over(window_spec)
+        )
 
         return ranked_df.filter(sf.col("rank") == 1)
-

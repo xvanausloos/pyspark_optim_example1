@@ -13,18 +13,19 @@ def main() -> None:
 
     num_groups = 5
     # Generate test data with overlapping names returns a list of dataframes
-    #test_data_list = application.generate_test_data(num_groups=num_groups, overlap=True)
+    # test_data_list = application.generate_test_data(num_groups=num_groups, overlap=True)
 
-
-    #mf = MyFunc(my_spark)
-    #result = mf.use_loops(test_data_list)
+    # mf = MyFunc(my_spark)
+    # result = mf.use_loops(test_data_list)
 
     # Step 1: Union all DataFrames in df_list into a single DataFrame
-    #unioned_df = functools.reduce(lambda df1, df2: df1.unionByName(df2, allowMissingColumns=True), test_data_list)
+    # unioned_df = functools.reduce(lambda df1, df2: df1.unionByName(df2, allowMissingColumns=True), test_data_list)
 
-    #result2 = mf.use_dataframe_properties(df=unioned_df, num_groups=5)
+    # result2 = mf.use_dataframe_properties(df=unioned_df, num_groups=5)
 
-    use_loops_times, use_dataframe_properties_times =application.compare_two_func(num_groups=[1, 3])
+    use_loops_times, use_dataframe_properties_times = application.compare_two_func(
+        num_groups=[1, 3]
+    )
 
     print(f"use_loops_times: {use_loops_times}")
     print(f"use_dataframe_properties_times: {use_dataframe_properties_times}")
@@ -78,7 +79,7 @@ class Application:
             df_list.append(group_df)
         return df_list
 
-    def compare_two_func(self, num_groups = [1, 10]) -> (list, list):
+    def compare_two_func(self, num_groups=[1, 10]) -> (list, list):
         """
 
         :type num_groups: object
@@ -92,7 +93,10 @@ class Application:
             # person_list = ["Person_" + str(i) for i in range(100)]
             test_data = self.generate_test_data(num_groups=num, overlap=True)
             # Step 1: Union all DataFrames in df_list into a single DataFrame
-            unioned_df = functools.reduce(lambda df1, df2: df1.unionByName(df2,allowMissingColumns=True), test_data)
+            unioned_df = functools.reduce(
+                lambda df1, df2: df1.unionByName(df2, allowMissingColumns=True),
+                test_data,
+            )
 
             # use loops
             start_time = time.time()
