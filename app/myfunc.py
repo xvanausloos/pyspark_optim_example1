@@ -8,7 +8,7 @@ class MyFunc:
     def __init__(self, spark: SparkSession) -> None:
         self._spark = spark
 
-    def use_loops(self, list_df: list):
+    def use_loops(spark: SparkSession, list_df: list):
         distinct_names = set()
         final_groups = []
         for ind, group in enumerate(list_df):
@@ -23,7 +23,7 @@ class MyFunc:
                     final_groups.append(
                         group.join(
                             sf.broadcast(
-                                self._spark.createDataFrame(
+                                spark.createDataFrame(
                                     [(names,) for names in keep_names],
                                     ["names"],
                                 )
@@ -34,7 +34,7 @@ class MyFunc:
 
         return reduce(DataFrame.unionByName, final_groups)
 
-    def use_dataframe_properties(self, df: DataFrame, num_groups: int):
+    def use_dataframe_properties(df: DataFrame, num_groups: int):
         group_ref = ["Group_" + str(i) for i in range(num_groups)]
 
         mapping_dict = {col_id: idx for idx, col_id in enumerate(group_ref)}
@@ -47,3 +47,4 @@ class MyFunc:
         ranked_df = df_with_mapping.withColumn("rank", sf.row_number().over(window_spec))
 
         return ranked_df.filter(sf.col("rank") == 1)
+
