@@ -5,7 +5,6 @@ from app.myfunc import MyFunc
 from common import spark_utils
 
 
-
 def main() -> None:
     my_spark = spark_utils.get_spark_session(app_name="ldi")
     application = Application(my_spark)
