@@ -1,17 +1,15 @@
 import functools
-from datetime import time, datetime
-
+from datetime import time
 from pyspark.sql import SparkSession
 from app.myfunc import MyFunc
 from common import spark_utils
-import time
+
 
 
 def main() -> None:
     my_spark = spark_utils.get_spark_session(app_name="ldi")
     application = Application(my_spark)
 
-    num_groups = 5
     # Generate test data with overlapping names returns a list of dataframes
     # test_data_list = application.generate_test_data(num_groups=num_groups, overlap=True)
 
